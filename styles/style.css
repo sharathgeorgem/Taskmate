@@ -1,18 +1,178 @@
 body {
     background-color: #e90052;
-    color: #ffffff
+    color: #ffffff;
+    background: #bc4e9c;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f80759, #bc4e9c);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f80759, #bc4e9c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 body, input, button {
     font-family: 'Ubuntu', sans-serif;
 }
 
-h1 {
-    height: 40px;
+#top {
+    position: fixed;
     width: 100%;
-    margin: 0 0 20px 0;
-    background : #04f5ff;
+    z-index: 5;
+}
+
+#top h1 { 
+    width: 100%;
     color: #38003c;
+    float: left;
+    height: 40px;
+    background : #04f5ff;
     text-align: center;
 }
 
+#top header {
+    float: left;
+    width: 100%;
+    height: 40px;
+    padding: 5px 5px 5px 5px;
+    background: #25b99a;
+    box-shadow: 0px 2px 4px rgba(44, 62, 80, 0.15);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#top header input {
+    width : 100%;
+    height: 30px;
+    float: left;
+    color:#fff; 
+    font-size:15px;
+    font-weight: 400;
+    text-indent: 18px;
+    padding: 0 35px 0 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#top header input::-webkit-input-placeholder {
+    color: rgba(56, 0, 60, 0.75)
+}
+
+#top header button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    z-index: 2;
+    border-radius: 25px;
+    background: #38003c;
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #fff;
+}
+
+.container {
+    position: absolute;
+    width:100%;
+    float:left;
+    padding: 15px;
+    margin: 100px 0 0 0;
+}
+
+ul.todo {
+    width: 100%;
+    float: left;
+}
+
+ul.todo li {
+    width: 100%;
+    min-height: 15px;
+    float: left;
+    font-size: 14;
+    font-weight: 500;
+    color: #444;
+    line-height: 22px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px rgba(44, 62, 80, 0.10);
+    margin: 0 0 10px 0;
+    position: relative;
+    padding: 14px 14px 14px 14px;
+}
+
+ul.todo li:last-of-type {
+    margin: 0;
+}
+
+ul.todo li .buttons {
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+ul.todo li .buttons button{
+    width: 50px;
+    height: 50px;
+    appearance: none;
+    float: left;
+    background: none;
+    box-shadow: none;
+    border: 0px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+}
+
+ul.todo li .buttons button:last-of-type:before {
+    width: 1px;
+    content: '';
+    height: 30px;
+    position: absolute;
+    top: 18px;
+    left: 0;
+    background: #edf0f1;
+}
+
+ul.todo#completed {
+    position: relative;
+    padding: 60px 0 0 0;
+}
+
+ul.todo#completed:before {
+    content: '';
+    width: 150px;
+    height: 1px;
+    background: #d8e5e0;
+    position: absolute;
+    top : 30px;
+    left: 50%;
+    margin: 0 0 0 -75px;
+}
+
+ul.todo#todo:empty:after {
+    content: 'You have nothing to do!';
+    margin: 15px 0 0 0;
+}
+
+ul.todo#completed:empty:after {
+    content: 'You have yet to complete any tasks.';
+}
+
+ul.todo#todo:after,
+ul.todo#completed:after {
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}

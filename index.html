@@ -11,11 +11,15 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 <body>
-    <h1>Taskmate</h1>
-    <header>
-       <input type="text" placeholder="Enter a task" id="item">
-       <button id="add"></button> 
-    </header>
+
+    <div id = "top">
+        <h1>Taskmate</h1>
+        <!--<input id="colorPicker" type="color" />--> 
+        <header>
+            <input type="text" placeholder="Enter a task" id="item">
+            <button id="add">&plus;</button> 
+        </header>
+    </div>
 
     <div class="container">
         <!--Incomplete tasks-->
@@ -23,8 +27,6 @@
         <!--Completed tasks-->
         <ul class="todo" id="completed"></ul>
     </div>
-
-    <input id="colorPicker" type="color" />
 
     <script src="scripts/script.js"></script>
 </body>
