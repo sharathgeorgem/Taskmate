@@ -28,6 +28,9 @@ document.getElementById('item').addEventListener('keydown', function (e) {
 function addItem (value) {
   addItemToDOM(value)
   document.getElementById('item').value = ''
+
+  data.todo.push(value)
+  dataObjectUpdated()
 }
 
 function renderTodoList () {
