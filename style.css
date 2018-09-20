@@ -1,0 +1,18 @@
+body {
+    background-color: #e90052;
+    color: #ffffff
+}
+
+body, input, button {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+h1 {
+    height: 40px;
+    width: 100%;
+    margin: 0 0 20px 0;
+    background : #04f5ff;
+    color: #38003c;
+    text-align: center;
+}
+

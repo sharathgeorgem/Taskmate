@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskmate</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700" rel="stylesheet">
+    
+    <!--Stylesheets embed-->
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Taskmate</h1>
+    <header>
+       <input type="text" placeholder="Enter a task" id="item">
+       <button id="add"></button> 
+    </header>
+
+    <div class="container">
+        <!--Incomplete tasks-->
+        <ul class="todo" id="todo"></ul>
+        <!--Completed tasks-->
+        <ul class="todo" id="completed"></ul>
+    </div>
+
+    <input id="colorPicker" type="color" />
+
+    <script src="script.js"></script>
+</body>
+</html>
