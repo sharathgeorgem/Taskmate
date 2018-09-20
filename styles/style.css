@@ -113,7 +113,7 @@ ul.todo li:last-of-type {
 }
 
 ul.todo li .buttons {
-    width: 100px;
+    width: 152px;
     height: 50px;
     position: absolute;
     top: 0;
@@ -131,16 +131,32 @@ ul.todo li .buttons button{
     outline: none;
     position: relative;
     cursor: pointer;
+    background-color: #38003c;
+    margin: 0 1px 0 0;
 }
 
-ul.todo li .buttons button:last-of-type:before {
-    width: 1px;
-    content: '';
-    height: 30px;
-    position: absolute;
-    top: 18px;
-    left: 0;
-    background: #edf0f1;
+ul.todo li .buttons button:last-of-type {
+    margin: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+ul.todo li .buttons button.complete::after {
+    content: '\2713';
+    color: #fff;
+    font-size: 30px;
+}
+
+ul.todo li .buttons button.remove::after {
+    content: '\1f5D1';
+    color: #fff;
+    font-size: 25px;
+}
+
+ul.todo li .buttons button.voice::after {
+    content: '\1f50A';
+    color: #fff;
+    font-size: 25px;
 }
 
 ul.todo#completed {
