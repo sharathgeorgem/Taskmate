@@ -79,7 +79,7 @@ function completeItem () {
 // Text to speech converter
 function textToSpeech () {
   var utterance = new window.SpeechSynthesisUtterance()
-  utterance.lang = 'en-GB'
+  utterance.lang = 'en-IN'
   var item = this.parentNode.parentNode
   var inputText = item.innerText
   utterance.text = inputText

@@ -1,0 +1,24 @@
+{
+  "name": "Taskmate",
+  "version": "1.0.0",
+  "description": "A To-do app written using VanillaJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharathgeorgem/Taskmate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sharathgeorgem/Taskmate/issues"
+  },
+  "homepage": "https://github.com/sharathgeorgem/Taskmate#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "npm": "^6.4.1"
+  }
+}
