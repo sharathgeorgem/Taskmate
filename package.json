@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/sharathgeorgem/Taskmate#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "npm": "^6.4.1"
+    "npm": "^6.4.1",
+    "requirejs": "^2.3.6"
   }
 }
