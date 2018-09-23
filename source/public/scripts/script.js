@@ -1,6 +1,8 @@
 // Global object to store app data
 var data = (window.localStorage.getItem('todoList')) ? JSON.parse(window.localStorage.getItem('todoList')) : {
+  // Array of todo task objects
   todo: [],
+  // Array of completed task objects
   completed: []
 }
 renderTodoList()
@@ -8,9 +10,10 @@ renderTodoList()
 document.getElementById('add').addEventListener('click', function () {
   var value = document.getElementById('item').value
   if (value) {
-    addItemToDOM(value)
+    addItemToDOM({taskName: value})
     document.getElementById('item').value = ''
-    data.todo.push(value)
+    data.todo.push({taskName: value})
+    console.log(data)
     dataObjectUpdated()
   }
 })
@@ -22,10 +25,10 @@ document.getElementById('item').addEventListener('keydown', function (e) {
   }
 })
 function addItem (value) {
-  addItemToDOM(value)
+  addItemToDOM({taskName: value})
   document.getElementById('item').value = ''
-  sendItemToAPI(value)
-  data.todo.push(value)
+  // sendItemToAPI(value)
+  data.todo.push({taskName: value})
   dataObjectUpdated()
 }
 // To restore saved tasks
@@ -50,10 +53,12 @@ function removeItem () {
   var parent = item.parentNode
   var id = parent.id
   var value = item.innerText
+  var findIndexInTodo = data.todo.indexOf(data.todo.find(o => o.taskName === value))
+  var findIndexInCompleted = data.completed.indexOf(data.completed.find(o => o.taskName === value))
   if (id === 'todo') {
-    data.todo.splice(data.todo.indexOf(value), 1)
+    data.todo.splice(findIndexInTodo, 1)
   } else {
-    data.completed.splice(data.completed.indexOf(value), 1)
+    data.completed.splice(findIndexInCompleted, 1)
   }
   parent.removeChild(item)
   dataObjectUpdated()
@@ -65,11 +70,13 @@ function completeItem () {
   var id = parent.id
   var value = item.innerText
   if (id === 'todo') {
-    data.todo.splice(data.todo.indexOf(value), 1)
-    data.completed.push(value)
+    let flip = data.todo.find(o => o.taskName === value)
+    data.todo.splice(data.todo.indexOf(flip), 1)
+    data.completed.push(flip)
   } else {
-    data.completed.splice(data.completed.indexOf(value), 1)
-    data.todo.push(value)
+    let flip = data.completed.find(o => o.taskName === value)
+    data.completed.splice(data.completed.indexOf(flip), 1)
+    data.todo.push(flip)
   }
   // Check if item should be added to completed list or re-added to todo list
   var target = (id === 'todo') ? document.getElementById('completed') : document.getElementById('todo')
@@ -80,17 +87,17 @@ function completeItem () {
 // Text to speech converter
 function textToSpeech () {
   var utterance = new window.SpeechSynthesisUtterance()
-  utterance.lang = 'en-IN'
+  utterance.lang = 'en-GB'
   var item = this.parentNode.parentNode
   var inputText = item.innerText
   utterance.text = inputText
   window.speechSynthesis.speak(utterance)
 }
 // Adds a new item to the todo list
-function addItemToDOM (text, completed) {
+function addItemToDOM (obj, completed) {
   var list = (completed) ? document.getElementById('completed') : document.getElementById('todo')
   var item = document.createElement('li')
-  item.innerText = text
+  item.innerText = obj.taskName
   var buttons = document.createElement('div')
   buttons.classList.add('buttons')
   var remove = document.createElement('button')
