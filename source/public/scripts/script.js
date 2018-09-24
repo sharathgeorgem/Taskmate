@@ -13,7 +13,6 @@ document.getElementById('add').addEventListener('click', function () {
     addItemToDOM({taskName: value})
     document.getElementById('item').value = ''
     data.todo.push({taskName: value})
-    console.log(data)
     dataObjectUpdated()
   }
 })
@@ -84,6 +83,76 @@ function completeItem () {
   target.insertBefore(item, target.childNodes[0])
   dataObjectUpdated()
 }
+// Edit text
+function editText () {
+  var item = this.parentNode.parentNode
+  var id = item.parentNode.id
+  var buttons = this.parentNode
+  var editInput = item.querySelector('input')
+  var commentInput = item.querySelector('textArea')
+  if (editInput.style.display === 'none') {
+    editInput.style.display = 'block'
+    editInput.value = item.innerText
+  } else {
+    if (editInput.value && (editInput.value !== item.innerText)) {
+      if (id === 'todo') {
+        let flip = data.todo.find(o => o.taskName === item.innerText)
+        data.todo.splice(data.todo.indexOf(flip), 1, {taskName: editInput.value})
+      } else {
+        let flip = data.completed.find(o => o.taskName === item.innerText)
+        data.completed.splice(data.completed.indexOf(flip), 1, {taskName: editInput.value})
+      }
+      item.innerText = editInput.value
+      item.appendChild(editInput)
+      item.appendChild(commentInput)
+      item.appendChild(buttons)
+    }
+    editInput.style.display = 'none'
+  }
+  dataObjectUpdated()
+}
+// Comment text
+function commentText () {
+  var item = this.parentNode.parentNode
+  var id = item.parentNode.id
+  var buttons = this.parentNode
+  var editInput = item.querySelector('input')
+  var commentInput = item.querySelector('textArea')
+  if (commentInput.style.display === 'none') {
+    commentInput.style.display = 'block'
+    if (id === 'todo') {
+      let flip = data.todo.find(o => o.taskName === item.innerText)
+      if (commentInput.value) {
+        flip.commentText = commentInput.value
+      }
+    } else {
+      let flip = data.completed.find(o => o.taskName === item.innerText)
+      if (commentInput.value) {
+        flip.commentText = commentInput.value
+      }
+    }
+    item.appendChild(editInput)
+    item.appendChild(commentInput)
+    item.appendChild(buttons)
+  } else {
+    if (id === 'todo') {
+      let flip = data.todo.find(o => o.taskName === item.innerText)
+      if (commentInput.value) {
+        flip.commentText = commentInput.value
+      }
+    } else {
+      let flip = data.completed.find(o => o.taskName === item.innerText)
+      if (commentInput.value) {
+        flip.commentText = commentInput.value
+      }
+    }
+    item.appendChild(editInput)
+    item.appendChild(commentInput)
+    item.appendChild(buttons)
+    commentInput.style.display = 'none'
+  }
+  dataObjectUpdated()
+}
 // Text to speech converter
 function textToSpeech () {
   var utterance = new window.SpeechSynthesisUtterance()
@@ -98,6 +167,15 @@ function addItemToDOM (obj, completed) {
   var list = (completed) ? document.getElementById('completed') : document.getElementById('todo')
   var item = document.createElement('li')
   item.innerText = obj.taskName
+  var editArea = document.createElement('input')
+  editArea.setAttribute('type', 'text')
+  editArea.classList.add('editArea')
+  var commentArea = document.createElement('textarea')
+  commentArea.setAttribute('placeholder', 'Comments.')
+  commentArea.classList.add('textArea')
+  if (obj.commentText) {
+    commentArea.innerText = obj.commentText
+  }
   var buttons = document.createElement('div')
   buttons.classList.add('buttons')
   var remove = document.createElement('button')
@@ -112,9 +190,23 @@ function addItemToDOM (obj, completed) {
   voice.classList.add('voice')
   // Add click event for speech output
   voice.addEventListener('click', textToSpeech)
+  // Add click event for editing task name
+  var edit = document.createElement('button')
+  edit.classList.add('edit')
+  edit.addEventListener('click', editText)
+  // Add click event for adding comment
+  var comment = document.createElement('button')
+  comment.classList.add('comment')
+  comment.addEventListener('click', commentText)
+
+  item.appendChild(editArea)
+  item.appendChild(commentArea)
   buttons.appendChild(remove)
+  buttons.appendChild(edit)
+  buttons.appendChild(comment)
   buttons.appendChild(voice)
   buttons.appendChild(complete)
+
   item.appendChild(buttons)
   list.insertBefore(item, list.childNodes[0])
 }

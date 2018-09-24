@@ -113,12 +113,12 @@ ul.todo li {
     font-weight: 500;
     color: #444;
     line-height: 22px;
-    background: #fff;
+    background: linear-gradient(to left, #22c1c3, #fdbb2d);
     border-radius: 5px;
     box-shadow: 0px 1px 2px rgba(44, 62, 80, 0.10);
     margin: 0 0 10px 0;
     position: relative;
-    padding: 14px 14px 14px 14px;
+    padding: 14px 450px 14px 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -128,8 +128,59 @@ ul.todo li:last-of-type {
     margin: 0;
 }
 
+ul.todo input.editArea {
+    display: none;
+    width : 47%;
+    height: 30px;
+    position: absolute;
+    left: 10px;
+    top:10px;
+    z-index: 2;
+    color: #38003c; 
+    font-size:15px;
+    font-weight: 400;
+    padding: 0 35px 0 0;
+    background: linear-gradient(to left, #c9d6ff, #e2e2e2);
+    border-radius: 5px;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+ul.todo input.editArea:hover {
+    background: linear-gradient(to left, #ffe259, #ffa751);
+    transition: all 2s;
+}
+
+ul.todo textArea {
+    display: none;
+    position: absolute;
+    right: 260px;
+    top: 10px;
+    height: 30px;
+    width: 200px;
+    z-index: 3;
+    color: #38003c;
+    background: linear-gradient(to right, #0cebeb, #20e3b2, #29ffc6);
+    border: none;
+    transition: all 0.5s ease-in-out;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+ul.todo textarea:focus {
+    width: 50%;
+    background-color: #aaa;
+}
+
+ul.todo input::-webkit-input-placeholder {
+    color: rgba(56, 0, 60, 0.75)
+}
+
 ul.todo li .buttons {
-    width: 150px;
+    width: 250px;
     height: 50px;
     position: absolute;
     top: 0;
@@ -148,6 +199,7 @@ ul.todo li .buttons button{
     position: relative;
     cursor: pointer;
     background-color: #38003c;
+    transition: all 0.5s;
 }
 
 ul.todo li .buttons button:last-of-type {
@@ -178,6 +230,18 @@ ul.todo li .buttons button.voice::after {
     font-size: 25px;
 }
 
+ul.todo li .buttons button.edit::after {
+    content: '\1f589';
+    color: #fff;
+    font-size: 25px;
+}
+
+ul.todo li .buttons button.comment::after {
+    content: '\1f4ac';
+    color: #fff;
+    font-size: 25px;
+}
+
 ul.todo#completed li .buttons button.complete::after {
     content: '\1f5d8';
     color: #fff;
@@ -190,7 +254,7 @@ ul.todo#completed {
 }
 
 ul.todo#completed li{
-    background-color: #00ff87;
+    background: linear-gradient(to left, #11998e, #38ef7d);
 }
 
 ul.todo:not(#completed) li .buttons button.complete:hover {
@@ -203,6 +267,14 @@ ul.todo:not(#completed) li .buttons button.remove:hover {
 
 ul.todo:not(#completed) li .buttons button.voice:hover {
     background-color: darkcyan;
+}
+
+ul.todo li .buttons button.edit:hover {
+    background-color: #fdbb2d;
+}
+
+ul.todo li .buttons button.comment:hover {
+    background-color: #bc4e9c;
 }
 
 ul.todo#completed li .buttons button.complete:hover {
