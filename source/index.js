@@ -1,19 +1,18 @@
-// Load express
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path')
 
-// Run express method
-const api = express()
+const app = express()
 
-// Serve static pages
-api.use(express.static(__dirname + '/public'))
-api.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, '/public')))
+app.use(bodyParser.json())
 
-api.listen(3000, () => {
+app.listen(7460, () => {
   console.log('API up and running')
 })
 
-api.post('/add', (req, res) => {
-  console.log(req.body)
+app.post('/add', (req, res) => {
+  console.log('Post request received')
+  console.log('The body is ', req.body)
   res.send('It works bruh')
 })

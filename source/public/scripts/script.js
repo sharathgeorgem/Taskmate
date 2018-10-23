@@ -26,7 +26,7 @@ document.getElementById('item').addEventListener('keydown', function (e) {
 function addItem (value) {
   addItemToDOM({taskName: value})
   document.getElementById('item').value = ''
-  // sendItemToAPI(value)
+  sendItemToAPI(value)
   data.todo.push({taskName: value})
   dataObjectUpdated()
 }
@@ -212,18 +212,14 @@ function addItemToDOM (obj, completed) {
 }
 
 // Send task data to API
-/* function sendItemToAPI (item) {
-  var req = new XMLHttpRequest()
-  req.open('POST', '/add')
-  req.setRequestHeader('Content-Type', 'application/json')
-  req.send(JSON.stringify({item: item}))
-
-  req.addEventListener('load', () => {
-    // console.log(req.responseText)
-    console.log('Request done')
-  })
-
-  req.addEventListener('error', () => {
-    console.log('Something happened')
-  })
-} */
+function sendItemToAPI (item) {
+  fetch('/add', {
+    method: 'POST',
+    body: JSON.stringify({taskName: item}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error))
+}
