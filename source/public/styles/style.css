@@ -1,9 +1,26 @@
+@charset "UTF-8";
+
 body {
-    background-color: #e90052;
     color: #ffffff;
-    background: #bc4e9c;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #f80759, #bc4e9c);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #f80759, #bc4e9c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    -webkit-animation: pulse 10s infinite; 
+    animation: pulse 10s infinite;
+}
+
+@-webkit-keyframes pulse {
+    0% {background: #f44336}
+    25% {background: #e91e63}
+    50% {background: #9c2780}
+    75% {background: #673ab7}
+    100% {background: #f44336} 
+    /*Check loops*/
+}
+
+@keyframes pulse {
+    0% {background: #f44336}
+    25% {background: #e91e63}
+    50% {background: #9c2780}
+    75% {background: #673ab7}
+    100% {background: #f44336}
 }
 
 body, input, button {
@@ -213,7 +230,7 @@ ul.todo li .buttons button:first-of-type {
 }
 
 ul.todo li .buttons button.complete::after {
-    content: '\2713';
+    content: '\02713';
     color: #fff;
     font-size: 30px;
 }

@@ -1,7 +1,7 @@
 // Global object to store app data
 var data = (window.localStorage.getItem('todoList')) ? JSON.parse(window.localStorage.getItem('todoList')) : {
   // Array of todo task objects
-  todo: [],
+  todo: [], // SPLIT
   // Array of completed task objects
   completed: []
 }
@@ -118,7 +118,7 @@ function commentText () {
   var buttons = this.parentNode
   var editInput = item.querySelector('input')
   var commentInput = item.querySelector('textArea')
-  if (commentInput.style.display === 'none') {
+  if (commentInput.style.display === 'none') {// Check for hidden
     commentInput.style.display = 'block'
     if (id === 'todo') {
       let flip = data.todo.find(o => o.taskName === item.innerText)
@@ -212,7 +212,7 @@ function addItemToDOM (obj, completed) {
 }
 
 // Send task data to API
-function sendItemToAPI (item) {
+/* function sendItemToAPI (item) {
   var req = new XMLHttpRequest()
   req.open('POST', '/add')
   req.setRequestHeader('Content-Type', 'application/json')
@@ -224,6 +224,6 @@ function sendItemToAPI (item) {
   })
 
   req.addEventListener('error', () => {
-    console.log('Something happened bruh')
+    console.log('Something happened')
   })
-}
+} */
