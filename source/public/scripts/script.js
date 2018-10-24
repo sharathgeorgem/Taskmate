@@ -26,9 +26,11 @@ document.getElementById('item').addEventListener('keydown', function (e) {
 function addItem (value) {
   addItemToDOM({taskName: value})
   document.getElementById('item').value = ''
-  sendItemToAPI(value)
-  data.todo.push({taskName: value})
-  dataObjectUpdated()
+  sendItemToAPI(value, (item) => {
+    console.log('The item is ', item)
+  })
+  // data.todo.push({taskName: value})
+  // dataObjectUpdated()
 }
 // To restore saved tasks
 function renderTodoList () {
@@ -118,7 +120,7 @@ function commentText () {
   var buttons = this.parentNode
   var editInput = item.querySelector('input')
   var commentInput = item.querySelector('textArea')
-  if (commentInput.style.display === 'none') {// Check for hidden
+  if (commentInput.style.display === 'none') { // Check for hidden
     commentInput.style.display = 'block'
     if (id === 'todo') {
       let flip = data.todo.find(o => o.taskName === item.innerText)
@@ -212,7 +214,7 @@ function addItemToDOM (obj, completed) {
 }
 
 // Send task data to API
-function sendItemToAPI (item) {
+function sendItemToAPI (item, func) {
   fetch('/add', {
     method: 'POST',
     body: JSON.stringify({taskName: item}),
@@ -220,6 +222,11 @@ function sendItemToAPI (item) {
       'Content-Type': 'application/json'
     }
   }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
+    .then((response) => {
+      console.log('Success:', JSON.stringify(response))
+      if (func) {
+        func(response)
+      }
+    })
     .catch(error => console.error('Error:', error))
 }
