@@ -1,19 +1,15 @@
-// Global object to store app data
-var data = (window.localStorage.getItem('todoList')) ? JSON.parse(window.localStorage.getItem('todoList')) : {
-  // Array of todo task objects
-  todo: [], // SPLIT
-  // Array of completed task objects
-  completed: []
-}
-renderTodoList()
+getTasksFromAPI((tasks) => {
+  tasks.map((item) => {
+    addItemToDOM(item, item.completed)
+  })
+})
+
 // Event listener for button press
 document.getElementById('add').addEventListener('click', function () {
   var value = document.getElementById('item').value
   if (value) {
     addItemToDOM({taskName: value})
     document.getElementById('item').value = ''
-    data.todo.push({taskName: value})
-    dataObjectUpdated()
   }
 })
 // Event listener for Enter key press
@@ -24,45 +20,20 @@ document.getElementById('item').addEventListener('keydown', function (e) {
   }
 })
 function addItem (value) {
-  addItemToDOM({taskName: value})
   document.getElementById('item').value = ''
   sendItemToAPI(value, (item) => {
     console.log('The item is ', item)
+    addItemToDOM(item)
   })
-  // data.todo.push({taskName: value})
-  // dataObjectUpdated()
 }
-// To restore saved tasks
-function renderTodoList () {
-  if (!data.todo.length && !data.completed.length) return
-  for (let i = 0; i < data.todo.length; i++) {
-    let value = data.todo[i]
-    addItemToDOM(value)
-  }
-  for (let i = 0; i < data.completed.length; i++) {
-    let value = data.completed[i]
-    addItemToDOM(value, true)
-  }
-}
-// Save task to local storage
-function dataObjectUpdated () {
-  window.localStorage.setItem('todoList', JSON.stringify(data))
-}
+
 // To remove list item
 function removeItem () {
   var item = this.parentNode.parentNode
   var parent = item.parentNode
   var id = parent.id
   var value = item.innerText
-  var findIndexInTodo = data.todo.indexOf(data.todo.find(o => o.taskName === value))
-  var findIndexInCompleted = data.completed.indexOf(data.completed.find(o => o.taskName === value))
-  if (id === 'todo') {
-    data.todo.splice(findIndexInTodo, 1)
-  } else {
-    data.completed.splice(findIndexInCompleted, 1)
-  }
   parent.removeChild(item)
-  dataObjectUpdated()
 }
 // To switch tasks between To-do/Completed task list
 function completeItem () {
@@ -70,20 +41,10 @@ function completeItem () {
   var parent = item.parentNode
   var id = parent.id
   var value = item.innerText
-  if (id === 'todo') {
-    let flip = data.todo.find(o => o.taskName === value)
-    data.todo.splice(data.todo.indexOf(flip), 1)
-    data.completed.push(flip)
-  } else {
-    let flip = data.completed.find(o => o.taskName === value)
-    data.completed.splice(data.completed.indexOf(flip), 1)
-    data.todo.push(flip)
-  }
   // Check if item should be added to completed list or re-added to todo list
   var target = (id === 'todo') ? document.getElementById('completed') : document.getElementById('todo')
   parent.removeChild(item)
   target.insertBefore(item, target.childNodes[0])
-  dataObjectUpdated()
 }
 // Edit text
 function editText () {
@@ -111,7 +72,6 @@ function editText () {
     }
     editInput.style.display = 'none'
   }
-  dataObjectUpdated()
 }
 // Comment text
 function commentText () {
@@ -153,7 +113,6 @@ function commentText () {
     item.appendChild(buttons)
     commentInput.style.display = 'none'
   }
-  dataObjectUpdated()
 }
 // Text to speech converter
 function textToSpeech () {
@@ -168,7 +127,9 @@ function textToSpeech () {
 function addItemToDOM (obj, completed) {
   var list = (completed) ? document.getElementById('completed') : document.getElementById('todo')
   var item = document.createElement('li')
-  item.innerText = obj.taskName
+  item.innerText = obj.description
+  item.setAttribute('data-id', obj.id)
+
   var editArea = document.createElement('input')
   editArea.setAttribute('type', 'text')
   editArea.classList.add('editArea')
@@ -224,6 +185,17 @@ function sendItemToAPI (item, func) {
   }).then(res => res.json())
     .then((response) => {
       console.log('Success:', JSON.stringify(response))
+      if (func) {
+        func(response)
+      }
+    })
+    .catch(error => console.error('Error:', error))
+}
+
+function getTasksFromAPI (func) {
+  fetch('/tasks')
+    .then(res => res.json())
+    .then((response) => {
       if (func) {
         func(response)
       }

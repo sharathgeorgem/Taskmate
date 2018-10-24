@@ -26,6 +26,14 @@ app.listen(7460, () => {
   console.log('API up and running')
 })
 
+app.get('/tasks', (req, res) => {
+  connection.query('SELECT * FROM tasks ORDER BY created DESC', (error, results) => {
+    if (error) return res.json({error: error})
+
+    res.json(results)
+  })
+})
+
 app.post('/add', (req, res) => {
   connection.query('INSERT INTO tasks (description) VALUES (?)', [req.body.taskName], (error, results) => {
     if (error) return res.json({error: error})
