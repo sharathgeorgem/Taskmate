@@ -30,10 +30,10 @@ app.post('/add', (req, res) => {
   console.log(req.body)
   connection.query('INSERT INTO tasks (description) VALUES (?)', [req.body.taskName], (error, results) => {
     if (error) return res.json({error: error})
-    
+
     connection.query('SELECT LAST_INSERT_ID() FROM tasks', (error, results) => {
       if (error) return res.json({error: error})
-      
+
       console.log(results[0]['LAST_INSERT_ID()'])
     })
   })
