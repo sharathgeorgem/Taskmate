@@ -34,7 +34,7 @@ app.get('/tasks', (req, res) => {
   })
 })
 
-app.post('/add', (req, res) => {
+app.post('/tasks/add', (req, res) => {
   connection.query('INSERT INTO tasks (description) VALUES (?)', [req.body.taskName], (error, results) => {
     if (error) return res.json({error: error})
 
@@ -47,5 +47,13 @@ app.post('/add', (req, res) => {
         description: req.body.taskName
       })
     })
+  })
+})
+
+app.post('/tasks/:id/remove', (req, res) => {
+  connection.query('DELETE FROM tasks WHERE id = ?', [req.params.id], (error, results) => {
+    if (error) return res.json({error: error})
+
+    res.json({})
   })
 })

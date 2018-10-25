@@ -31,9 +31,20 @@ function addItem (value) {
 function removeItem () {
   var item = this.parentNode.parentNode
   var parent = item.parentNode
-  var id = parent.id
-  var value = item.innerText
-  parent.removeChild(item)
+  var taskId = parseInt(item.getAttribute('data-id'))
+
+  fetch('/tasks/' + taskId + '/remove', {
+    method: 'POST',
+    // body: JSON.stringify({taskName: item}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+    .then((response) => {
+      console.log('Success:', JSON.stringify(response))
+      parent.removeChild(item)
+    })
+    .catch(error => console.error('Error:', error))
 }
 // To switch tasks between To-do/Completed task list
 function completeItem () {
@@ -176,7 +187,7 @@ function addItemToDOM (obj, completed) {
 
 // Send task data to API
 function sendItemToAPI (item, func) {
-  fetch('/add', {
+  fetch('/tasks/add', {
     method: 'POST',
     body: JSON.stringify({taskName: item}),
     headers: {
