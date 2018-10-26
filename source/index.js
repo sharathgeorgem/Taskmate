@@ -50,6 +50,14 @@ app.post('/tasks/add', (req, res) => {
   })
 })
 
+app.post('/tasks/:id/update', (req, res) => {
+  connection.query('UPDATE tasks SET completed = ? WHERE id = ?', [req.body.completed, req.params.id], (error, results) => {
+    if (error) return res.json({error: error})
+
+    res.json({})
+  })
+})
+
 app.post('/tasks/:id/remove', (req, res) => {
   connection.query('DELETE FROM tasks WHERE id = ?', [req.params.id], (error, results) => {
     if (error) return res.json({error: error})

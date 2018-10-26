@@ -51,11 +51,23 @@ function completeItem () {
   var item = this.parentNode.parentNode
   var parent = item.parentNode
   var id = parent.id
-  var value = item.innerText
+  var taskId = parseInt(item.getAttribute('data-id'))
   // Check if item should be added to completed list or re-added to todo list
   var target = (id === 'todo') ? document.getElementById('completed') : document.getElementById('todo')
-  parent.removeChild(item)
-  target.insertBefore(item, target.childNodes[0])
+
+  fetch('/tasks/' + taskId + '/update', {
+    method: 'POST',
+    body: JSON.stringify({completed: (id === 'todo')}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+    .then((response) => {
+      console.log('Success:', JSON.stringify(response))
+      parent.removeChild(item)
+      target.insertBefore(item, target.childNodes[0])
+    })
+    .catch(error => console.error('Error:', error))
 }
 // Edit text
 function editText () {
